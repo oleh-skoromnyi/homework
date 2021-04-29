@@ -19,19 +19,23 @@ namespace OOP.Task
             MovieList = new List<MovieFile>();
         }
 
-        File ParseString(string text)
+        void ParseString(string text)
         {
             string[] type = text.Split(':');
             switch (type[0].Trim())
             {
                 case "Text":
-                    return TextParser.Parse(type[1]);
+                    TextList.Add(TextParser.Parse(type[1]));
+                    break;
                 case "Image":
-                    return ImageParser.Parse(type[1]);
+                    ImageList.Add(ImageParser.Parse(type[1]));
+                    break;
                 case "Movie":
-                    return MovieParser.Parse(type[1]);
+                    MovieList.Add(MovieParser.Parse(type[1]));
+                    break;
+                default:
+                    throw new Exception("Unsupported type");
             }
-            throw new Exception("Unsupported type");
         }
 
         public void WriteToConsole()
@@ -55,24 +59,9 @@ namespace OOP.Task
         public void Parse()
         {
             string[] files = text.Split('\n');
-            List<TextFile> textList = new List<TextFile>();
-            List<ImageFile> imageList = new List<ImageFile>();
-            List<MovieFile> movieList = new List<MovieFile>();
             foreach (string file in files)
             {
-                File parsedFile = ParseString(file);
-                switch (parsedFile)
-                {
-                    case TextFile text:
-                        TextList.Add((TextFile)parsedFile);
-                        break;
-                    case ImageFile image:
-                        ImageList.Add((ImageFile)parsedFile);
-                        break;
-                    case MovieFile movie:
-                        MovieList.Add((MovieFile)parsedFile);
-                        break;
-                }
+                ParseString(file);
             }
         }
         public void Sort()
