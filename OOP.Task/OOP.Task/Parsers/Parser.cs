@@ -22,7 +22,7 @@ namespace OOP.Task
         void ParseString(string text)
         {
             string[] type = text.Split(':');
-            FileList.Add(Parsers[type[0].Trim()].Parse(text));
+            FileList.Add(Parsers[type[0].Trim()].Parse(type[1]));
         }
 
         public void WriteToConsole()
