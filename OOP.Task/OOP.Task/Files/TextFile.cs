@@ -9,6 +9,7 @@ namespace OOP.Task
         public string Content { get; set; }
         public TextFile(string fileName, string size, string content) 
         {
+            this.Type = "Text";
             this.FileName = fileName.Trim();
             this.Extension = GetExtension(fileName);
             this.Size = new Size(size);

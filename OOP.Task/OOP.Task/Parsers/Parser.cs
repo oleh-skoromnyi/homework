@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace OOP.Task
@@ -7,52 +8,33 @@ namespace OOP.Task
     public class Parser
     {
         public string text { get; set; }
-        public List<TextFile> TextList;
-        public List<ImageFile> ImageList;
-        public List<MovieFile> MovieList;
+        public List<File> FileList;
+        public Dictionary<string, IParser> Parsers;
 
         public Parser(string textForParsing)
         {
             this.text = textForParsing;
-            TextList = new List<TextFile>();
-            ImageList = new List<ImageFile>();
-            MovieList = new List<MovieFile>();
+            FileList = new List<File>();
+            Parsers = new Dictionary<string, IParser>();
+            AddParsers();
         }
 
         void ParseString(string text)
         {
             string[] type = text.Split(':');
-            switch (type[0].Trim())
-            {
-                case "Text":
-                    TextList.Add(TextParser.Parse(type[1]));
-                    break;
-                case "Image":
-                    ImageList.Add(ImageParser.Parse(type[1]));
-                    break;
-                case "Movie":
-                    MovieList.Add(MovieParser.Parse(type[1]));
-                    break;
-                default:
-                    throw new Exception("Unsupported type");
-            }
+            FileList.Add(Parsers[type[0].Trim()].Parse(text));
         }
 
         public void WriteToConsole()
         {
-            Console.WriteLine("Text Files:");
-            foreach(var file in TextList)
+            string type = "";
+            foreach(var file in FileList)
             {
-                Console.WriteLine(file.ToString());
-            }
-            Console.WriteLine("Movies:");
-            foreach (var file in MovieList)
-            {
-                Console.WriteLine(file.ToString());
-            }
-            Console.WriteLine("Images:");
-            foreach (var file in ImageList)
-            {
+                if (type != file.Type)
+                { 
+                    type = file.Type;
+                    Console.WriteLine($"{type}s:");
+                }
                 Console.WriteLine(file.ToString());
             }
         }
@@ -64,12 +46,28 @@ namespace OOP.Task
                 ParseString(file);
             }
         }
-        public void Sort()
+        public void GroupAndSort()
         {
-            TextList.Sort();
-            ImageList.Sort();
-            MovieList.Sort();
+            var res = (from item in FileList
+                       orderby item.Size
+                       group item by item.Type).ToList();
+            var newList = new List<File>();
+            foreach (var group in res)
+            {
+                foreach(File file in group)
+                {
+                    newList.Add(file);
+                }
+            }
+            FileList = newList;
         }
         
+        private void AddParsers()
+        {
+            Parsers.Add("Text", new TextParser());
+            Parsers.Add("Image", new ImageParser());
+            Parsers.Add("Movie", new MovieParser());
+        }
+
     }
 }

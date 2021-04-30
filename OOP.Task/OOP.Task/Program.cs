@@ -17,7 +17,7 @@ namespace OOP.Task
             Parser parser = new Parser(text);
 
             parser.Parse();
-            parser.Sort();
+            parser.GroupAndSort();
             parser.WriteToConsole();
         }
     }

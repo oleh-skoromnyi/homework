@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace OOP.Task
 {
     public abstract class File:IComparable<File>
     {
-        //Имя файла
+        public string Type { get; protected set; }
         public string FileName { get; set; }
-        //Расширение файла
         public string Extension { get; set; }
-        //Размер файла
         public Size Size { get; set; }
         public int CompareTo(File file)
         {
-            return this.Size.CompareTo(file.Size);
+            int temp = this.Size.CompareTo(file.Size);
+            if (temp != 0)
+                return temp;
+            else
+                return FileName.CompareTo(file.FileName);
         }
         //Общая часть вывода файла в строку
         public StringBuilder BaseOutput()
@@ -26,10 +29,9 @@ namespace OOP.Task
             return stringBuilder;
         }
         //Получение расширения файла
-        public string GetExtension(string fileName)
+        protected string GetExtension(string fileName)
         {
-           var temp = fileName.Split('.');
-           return temp[temp.Length - 1];
+           return fileName.Split('.').LastOrDefault();
         }
     }
 }

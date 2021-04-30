@@ -6,14 +6,14 @@ namespace OOP.Task
 {
     public class ImageFile:File
     {
-        //Разрешение изображения
-        public string Resolution { get; set; }
+        public Resolution Resolution { get; private set; }
         public ImageFile(string fileName, string size, string resolution)
         {
+            this.Type = "Image";
             this.FileName = fileName.Trim();
             this.Extension = GetExtension(fileName);
             this.Size = new Size(size);
-            this.Resolution = resolution.Trim();
+            this.Resolution = new Resolution(resolution.Trim());
         }
         public override string ToString()
         {
