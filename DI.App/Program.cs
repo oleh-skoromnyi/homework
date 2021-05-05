@@ -2,6 +2,7 @@
 using DI.App.Services;
 using DI.App.Abstractions;
 using System.Collections.Generic;
+using DI.App.Services.PL.Commands;
 
 namespace DI.App
 {
@@ -13,8 +14,9 @@ namespace DI.App
             var dbEntity = new Dictionary<int, IDbEntity>();
             var dbServices = new InMemoryDatabaseService(dbEntity);
             var userStore = new UserStore(dbServices);
-            var commands = new Dictionary<int, ICommand>();
-            var commandProcessor = new CommandProcessor(userStore, commands);
+            var addUsers = new AddUserCommand(userStore);
+            var listUsers = new ListUsersCommand(userStore);
+            var commandProcessor = new CommandProcessor(addUsers,listUsers);
             var manager = new CommandManager(commandProcessor);
 
             manager.Start();

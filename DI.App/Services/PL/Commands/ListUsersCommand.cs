@@ -12,7 +12,7 @@ namespace DI.App.Services.PL.Commands
         public string DisplayName { get; } = "List users";
 
         private readonly IUserStore userStore;
-        public ListUsersCommand(ref IUserStore userStore)
+        public ListUsersCommand(IUserStore userStore)
         {
             this.userStore = userStore;
         }

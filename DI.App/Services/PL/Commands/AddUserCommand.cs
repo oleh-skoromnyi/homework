@@ -14,7 +14,7 @@ namespace DI.App.Services.PL.Commands
         private readonly IUserStore userStore;
 
 
-        public AddUserCommand( ref IUserStore userStore)
+        public AddUserCommand(IUserStore userStore)
         {
             this.userStore = userStore;
             DisplayName = "Add user";
