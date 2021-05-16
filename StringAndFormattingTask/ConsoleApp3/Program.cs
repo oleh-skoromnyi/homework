@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace ConsoleApp3
 {
@@ -29,10 +32,24 @@ namespace ConsoleApp3
             PostCodeValidator("123-321");
             Console.WriteLine("   Part d");
             PhoneNumberValidator("+380-98-123-45-67");
-            Console.WriteLine("   Part d");
+            Console.WriteLine("   Part e");
             PhoneNumberReplacer("My phone number +380-98-123-45-67");
+            Console.WriteLine("\nTask 8");
+            string[] names = { "иван иванов", "светлана иванова-петренко" };
+            FirstSymbolsToUpper(names);
+            Console.WriteLine("\nTask 9");
+            string base64String = "0JXRgdC70Lgg0YLRiyDRh9C40YLQsNC10YjRjCDRjdGC0L7RgiDRgtC10LrRgdGCLCDQt9C90LDRh9C40YIg0LfQsNC00LDQvdC40LUg0LLRi9C/0L7Qu9C90LXQvdC+INCy0LXRgNC90L4gOik=";
+            DecodeBase64ToUTF8(base64String);
+            Console.WriteLine("\n QuickSort");
+            List<int> testListForQuickSort = new List<int>
+            {
+                102, 91, 45, 53, 37, 80, 53, 21, 73, 62
+            }; 
+            var sortedList = QuickSort<int>(testListForQuickSort);
+            Console.WriteLine($"Before sort: {String.Join(',', testListForQuickSort)}");
+            Console.WriteLine($"After sort: {String.Join(',', sortedList)}");
+
         }
-        //1)	Написать метод, который принимает строку и печатает на экран все ее символы, которые являются цифрой.
         public static void PrintNumbers(string inputString)
         {
             Console.WriteLine($"Numbers in string \"{inputString}\":");
@@ -45,13 +62,11 @@ namespace ConsoleApp3
             }
             Console.Write('\n');
         }
-        //2)	Преобразовать результат деления двух чисел в число с 2-мя знаками после запятой.
         public static double TransformDivisionResultToNumberWithTwoValueAfterComa(double firstNumber, double secondNumber)
         {
             Console.WriteLine($"Transformed result of {firstNumber}/{secondNumber}:");
             return Math.Round(firstNumber / secondNumber, 2);
         }
-        //3)	Прочитать целое число с консоли. Разрешить ввод в экспоненциальной форме.
         public static double ReadNumberFromConsoleWithExponentialForm()
         {
             Console.WriteLine($"Input number: ");
@@ -66,7 +81,6 @@ namespace ConsoleApp3
             Console.WriteLine($"Returned number: {result}");
             return result;
         }
-        //4)	Представить текущую дату и время в формате ISO-8601 
         public static string CurrentDateInFormatISO8601()
         {
             var currentDate = DateTime.Now;
@@ -77,7 +91,6 @@ namespace ConsoleApp3
             Console.WriteLine($"Formatted date : {formattedDate}");
             return formattedDate;
         }
-        //5)	Дана строка с датой: “2016 21-07”. Распарсить в DateTime.
         public static DateTime ParseStringToDateTime(string date = "2016 21-07")
         {
             var dateParts = date.Split(' ','-');
@@ -86,7 +99,6 @@ namespace ConsoleApp3
                 int.Parse(dateParts[2]),
                 int.Parse(dateParts[1]));
         }
-        //6)	Дана строка с целыми числами через запятую. Посчитать сумму всех чисел.
         public static int SumOfCommaSeparatedNumbers(string numbers)
         {
             int sum = 0;
@@ -96,8 +108,6 @@ namespace ConsoleApp3
             }
             return sum;
         }
-        //7)	Регулярные выражения:
-        //a)	Найти в тексте все подстроки, которые имеют вид “текст123” (любое кол-во символов за которыми следует любое кл-во чисел).
         public static void GetAllSubstringWithFormatTextNumbers(string text)
         {
             Regex reg = new Regex(@"[a-zA-Z]+\d+");
@@ -108,8 +118,7 @@ namespace ConsoleApp3
             {
                 Console.WriteLine($"{item.ToString()}");
             }
-        }
-        //b)	Валидировать пароль пользователя по след. правилам: минимальная длина - 6 символов, минимум одна прописная буква, заглавная, цифра.
+        } 
         public static bool PasswordValidator(string password)
         {
             Regex reg = new Regex(@"([a-z]*)([A-Z]*)(\d*)(\w{6,})");
@@ -117,7 +126,6 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
-        //c)	Валидировать ввод на Post Code по след. правилу: 3 цифры, тире, 3 цифры (123-456).
         public static bool PostCodeValidator(string postCode)
         {
             Regex reg = new Regex(@"\d{3}-\d{3}");
@@ -125,7 +133,6 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
-        //d)	Валидировать ввод на телефонный номер формата +380-98-123-45-67.
         public static bool PhoneNumberValidator(string phoneNumber)
         {
             Regex reg = new Regex(@"\+\d{3}-\d{2}-\d{3}-\d{2}-\d{2}");
@@ -133,7 +140,6 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
-        //e)	Заменить все телефонные номера в тексте(по шаблону выше) на строку "+XXX-XX-XXX-XX-XX”
         public static string PhoneNumberReplacer(string text)
         {
             Regex reg = new Regex(@"\+\d{3}-\d{2}-\d{3}-\d{2}-\d{2}");
@@ -145,6 +151,60 @@ namespace ConsoleApp3
             }
             Console.WriteLine($"Text with replaced phone numbers : {resultText}");
             return resultText;
+        }
+        public static string[] FirstSymbolsToUpper(string[] names)
+        {
+            List<string> resultArray = new List<string>();
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+            foreach (var name in names)
+            {
+                resultArray.Add(textInfo.ToTitleCase(name));
+            }
+            foreach(var result in resultArray)
+            {
+                Console.WriteLine($"Transformed name: {result}");
+            }
+            return resultArray.ToArray();
+        }
+        public static string DecodeBase64ToUTF8(string base64String)
+        {
+            var utf8String = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
+            Console.WriteLine($"Decoded string: {utf8String}");
+            return utf8String;
+
+        }
+        public static List<T> QuickSort<T>(List<T> genericList)
+            where T : IComparable
+        {
+            if (genericList.Count>1)
+            {
+                int middle = (genericList.Count / 2) - 1;
+                if (genericList.Any(x => x.CompareTo(genericList[middle]) != 0))
+                {
+                    List<T> result = new List<T>();
+                    var lessThenMiddle = QuickSort(genericList.Where(x => x.CompareTo(genericList[middle]) < 0).ToList());
+                    var equalMiddle = QuickSort(genericList.Where(x => x.CompareTo(genericList[middle]) == 0).ToList());
+                    var biggerThenMiddle = QuickSort(genericList.Where(x => x.CompareTo(genericList[middle]) > 0).ToList());
+                    if (lessThenMiddle != null)
+                    {
+                        result.AddRange(lessThenMiddle);
+                    }
+                    if (equalMiddle != null)
+                    {
+                        result.AddRange(equalMiddle);
+                    }
+                    if (equalMiddle != null)
+                    {
+                        result.AddRange(biggerThenMiddle);
+                    }
+                    return result;
+                }
+                return genericList;
+            }
+            else
+            {
+                return genericList;
+            }
         }
     }
 }
