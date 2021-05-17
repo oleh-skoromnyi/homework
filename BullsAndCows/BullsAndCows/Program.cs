@@ -53,7 +53,6 @@ namespace BullsAndCows
                     }
                     success = false;
                 }
-
                 Console.WriteLine("I guessed! Do you Want to repeat?(yes/no)");
                 string repeatRequest = Console.ReadLine();
                 repeat = repeatRequest.Contains("yes") ? true : false;

@@ -21,29 +21,21 @@ namespace BullsAndCows
         public string Start()
         {
             variants.Clear(); 
-            var possible = (int)Math.Pow(10, lenght);
-            for (int i = 0; i < possible; ++i)
+            var possible = (long)Math.Pow(10, lenght);
+            for (long i = 0; i < possible; ++i)
             {
                 var variantBuilder = new StringBuilder();
-
                 for (int j = lenght; j > 0; --j)
                 {
-
-                    variantBuilder.Append(j == 1 ? i % (int)Math.Pow(10, j) : (i % (int)Math.Pow(10, j)) / (int)Math.Pow(10, j - 1));
+                    variantBuilder.Append(j == 1 ? i % (long)Math.Pow(10, j) : (i % (long)Math.Pow(10, j)) / (long)Math.Pow(10, j - 1));
                 }
-
                 variants.Add(variantBuilder.ToString());
             }
-
             StringBuilder firstPredictionBuilder = new StringBuilder();
-
-
             for (int i = 0; i < lenght; ++i)
             {
-                    firstPredictionBuilder.Append(i);
+                firstPredictionBuilder.Append(i % 10);
             }
-
-
             prediction = firstPredictionBuilder.ToString();
             return prediction;
         }
@@ -52,7 +44,6 @@ namespace BullsAndCows
         {
             if (cows == 0 && bulls == 0)
             {
-
                 variants.RemoveAll(x =>
                 {
                     foreach (char symbol in prediction)
@@ -69,26 +60,12 @@ namespace BullsAndCows
             {
                 variants.RemoveAll(x => IsReadyToRemove(x, this.prediction, bulls, cows));
             }
-
             Random rand = new Random();
             Console.WriteLine($"Possible variants: {variants.Count()}");
-            //Try another method to get new prediction
-            /*string tempNewPrediction = String.Empty;
-            double removed = 0;
-            foreach (var variant in variants)
-            {
-                var tempResult = AverageRemovedCounter(variant);
-                if (tempResult > removed)
-                {
-                    removed = tempResult;
-                    tempNewPrediction = variant;
-                }
-            }*/
             var position = rand.Next(variants.Count());
-            prediction = /*tempNewPrediction*/variants.ElementAt(position);
+            prediction = variants.ElementAt(position);
             return prediction;
         }
-
         private double AverageRemovedCounter(string newPrediction)
         {
             int sum = 0;
@@ -128,7 +105,6 @@ namespace BullsAndCows
                 partOfPrediction.RemoveAt(index);
                 partOfSource.RemoveAt(index);
             }
-
             foreach (char symbol in partOfSource)
             {
                 if (partOfPrediction.Contains(symbol))
@@ -137,7 +113,6 @@ namespace BullsAndCows
                     partOfPrediction.Remove(symbol);
                 }
             }
-
             return !(cowCounter == cows && bullCounter == bulls);
         }
     }    
