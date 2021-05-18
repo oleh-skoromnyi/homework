@@ -64,21 +64,13 @@ namespace LinqTask
         public static void FilterByDate(List<Customer> customers)
         {
             Console.WriteLine($"Filtered by date from(year-month-day):");
-            var dateFromRead = Console.ReadLine().Split('-');
+            var dateFromRead = Console.ReadLine();
             Console.WriteLine($"Filtered by date to(year-month-day): ");
-            var dateToRead = Console.ReadLine().Split('-');
-            var dateFrom = new DateTime(
-                int.Parse(dateFromRead[0]),
-                int.Parse(dateFromRead[1]),
-                int.Parse(dateFromRead[2])
-                );
-            var dateTo = new DateTime(
-                 int.Parse(dateToRead[0]),
-                 int.Parse(dateToRead[1]),
-                 int.Parse(dateToRead[2])
-                 );
+            var dateToRead = Console.ReadLine();
+            var dateFrom = DateTime.Parse(dateFromRead);
+            var dateTo = DateTime.Parse(dateToRead);
             var filteredByDateCustomers = customers.Where(x => x.RegistrationDate >= dateFrom && x.RegistrationDate <= dateTo);
-            if (filteredByDateCustomers.Count() != 0)
+            if (filteredByDateCustomers.Any())
             {
                 foreach (var filteredCustomer in filteredByDateCustomers)
                 {
@@ -158,9 +150,7 @@ namespace LinqTask
             string chosenField = Console.ReadLine();
             Console.WriteLine($"Choose way to sort(asc/desc):");
             string chosenWayToSort = Console.ReadLine();
-
             List<Customer> sortedByInput;
-
             if (chosenWayToSort.Contains("asc"))
             {
                 sortedByInput = customers.OrderBy(x => customerType.GetProperty(chosenField).
@@ -173,7 +163,6 @@ namespace LinqTask
             }
 
             Console.WriteLine($"Ordered by {chosenField} by {chosenWayToSort}");
-
             foreach (var sortedCustomer in sortedByInput)
             {
                 Console.WriteLine($"{sortedCustomer.Id}::{sortedCustomer.Name}::{sortedCustomer.Balance}::{sortedCustomer.RegistrationDate}");
@@ -182,17 +171,7 @@ namespace LinqTask
         public static void CommaSeparatedNameOutput(List<Customer> customers)
         {
             Console.WriteLine($"Customer names separated with coma");
-            foreach (var customer in customers)
-            {
-                if (customer != customers.Last())
-                {
-                    Console.Write($"{customer.Name}, ");
-                }
-                else
-                {
-                    Console.Write($"{customer.Name}");
-                }
-            }
+            Console.WriteLine(String.Join(',', customers.Select(x=>x.Name)));
         }
     }
 }
