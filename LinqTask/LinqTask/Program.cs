@@ -88,7 +88,7 @@ namespace LinqTask
             var inputId = int.Parse(Console.ReadLine());
 
             var filteredByIdCustomers = customers.Where(x => x.Id == inputId);
-            if (filteredByIdCustomers.Count() != 0)
+            if (filteredByIdCustomers.Any())
             {
                 foreach (var filteredCustomer in filteredByIdCustomers)
                 {
@@ -106,7 +106,7 @@ namespace LinqTask
             var inputNamePart = Console.ReadLine();
 
             var filteredByNameCustomers = customers.Where(x => x.Name.ToLower().Contains(inputNamePart.ToLower()));
-            if (filteredByNameCustomers.Count() != 0)
+            if (filteredByNameCustomers.Any())
             {
                 foreach (var filteredCustomer in filteredByNameCustomers)
                 {
@@ -124,7 +124,7 @@ namespace LinqTask
             var groupedAndSortedCustomers = customers.
                 OrderBy(x => x.RegistrationDate.Month).ThenBy(x => x.Name).
                 GroupBy(x => x.RegistrationDate.Month);
-            if (groupedAndSortedCustomers.Count() != 0)
+            if (groupedAndSortedCustomers.Any())
             {
                 foreach (var group in groupedAndSortedCustomers)
                 {
