@@ -50,6 +50,7 @@ namespace ConsoleApp3
             Console.WriteLine($"After sort: {String.Join(',', sortedList)}");
 
         }
+
         public static void PrintNumbers(string inputString)
         {
             Console.WriteLine($"Numbers in string \"{inputString}\":");
@@ -62,11 +63,13 @@ namespace ConsoleApp3
             }
             Console.Write('\n');
         }
+
         public static double TransformDivisionResultToNumberWithTwoValueAfterComa(double firstNumber, double secondNumber)
         {
             Console.WriteLine($"Transformed result of {firstNumber}/{secondNumber}:");
             return Math.Round(firstNumber / secondNumber, 2);
         }
+
         public static double ReadNumberFromConsoleWithExponentialForm()
         {
             Console.WriteLine($"Input number: ");
@@ -81,6 +84,7 @@ namespace ConsoleApp3
             Console.WriteLine($"Returned number: {result}");
             return result;
         }
+
         public static string CurrentDateInFormatISO8601()
         {
             var currentDate = DateTime.Now;
@@ -91,6 +95,7 @@ namespace ConsoleApp3
             Console.WriteLine($"Formatted date : {formattedDate}");
             return formattedDate;
         }
+
         public static DateTime ParseStringToDateTime(string date = "2016 21-07")
         {
             var dateParts = date.Split(' ','-');
@@ -99,6 +104,7 @@ namespace ConsoleApp3
                 int.Parse(dateParts[2]),
                 int.Parse(dateParts[1]));
         }
+
         public static int SumOfCommaSeparatedNumbers(string numbers)
         {
             int sum = 0;
@@ -108,6 +114,7 @@ namespace ConsoleApp3
             }
             return sum;
         }
+
         public static void GetAllSubstringWithFormatTextNumbers(string text)
         {
             Regex reg = new Regex(@"[a-zA-Z]+\d+");
@@ -119,6 +126,7 @@ namespace ConsoleApp3
                 Console.WriteLine($"{item.ToString()}");
             }
         } 
+
         public static bool PasswordValidator(string password)
         {
             Regex reg = new Regex(@"([a-z]*)([A-Z]*)(\d*)(\w{6,})");
@@ -126,6 +134,7 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
+
         public static bool PostCodeValidator(string postCode)
         {
             Regex reg = new Regex(@"\d{3}-\d{3}");
@@ -133,6 +142,7 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
+
         public static bool PhoneNumberValidator(string phoneNumber)
         {
             Regex reg = new Regex(@"\+\d{3}-\d{2}-\d{3}-\d{2}-\d{2}");
@@ -140,6 +150,7 @@ namespace ConsoleApp3
             Console.WriteLine($"{result.Success}");
             return result.Success;
         }
+
         public static string PhoneNumberReplacer(string text)
         {
             Regex reg = new Regex(@"\+\d{3}-\d{2}-\d{3}-\d{2}-\d{2}");
@@ -149,9 +160,11 @@ namespace ConsoleApp3
             {
                 resultText = resultText.Replace(item.ToString(), "+XXX-XX-XXX-XX-XX");
             }
+
             Console.WriteLine($"Text with replaced phone numbers : {resultText}");
             return resultText;
         }
+
         public static string[] FirstSymbolsToUpper(string[] names)
         {
             List<string> resultArray = new List<string>();
@@ -160,19 +173,22 @@ namespace ConsoleApp3
             {
                 resultArray.Add(textInfo.ToTitleCase(name));
             }
+
             foreach(var result in resultArray)
             {
                 Console.WriteLine($"Transformed name: {result}");
             }
+
             return resultArray.ToArray();
         }
+
         public static string DecodeBase64ToUTF8(string base64String)
         {
             var utf8String = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(base64String));
             Console.WriteLine($"Decoded string: {utf8String}");
             return utf8String;
-
         }
+
         public static List<T> QuickSort<T>(List<T> genericList)
             where T : IComparable
         {
@@ -189,10 +205,12 @@ namespace ConsoleApp3
                     {
                         result.AddRange(lessThenMiddle);
                     }
+
                     if (equalMiddle != null)
                     {
                         result.AddRange(equalMiddle);
                     }
+
                     if (equalMiddle != null)
                     {
                         result.AddRange(biggerThenMiddle);
