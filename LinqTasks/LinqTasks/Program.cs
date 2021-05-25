@@ -96,56 +96,55 @@ namespace LinqTasks
         }
         public static void OutputActorsNames(List<object> data)
         {
-            Console.WriteLine(String.Join(',',data.Where(x=>x is Film).
-                SelectMany(x=>((Film)x).Actors).Select(x=>x.Name).Distinct()));
+            Console.WriteLine(String.Join(',',data.OfType<Film>().
+                SelectMany(x=>x.Actors).Select(x=>x.Name).Distinct()));
         }
         public static void OutputAmountOfActorsBornInSelectedMonth(List<object> data, int month)
         {
-            Console.WriteLine(data.Where(x => x is Film).SelectMany(x => ((Film)x).Actors).
+            Console.WriteLine(data.OfType<Film>().SelectMany(x => x.Actors).
                 Select(x=>x.Birthdate).Distinct().Where(x=>x.Month == month).Count());
         }
         public static void OutputTwoOldestActorsNames(List<object> data)
         {
-            Console.WriteLine(String.Join(',', data.Where(x => x is Film).
-                SelectMany(x => ((Film)x).Actors).OrderBy(x=>x.Birthdate).Select(x => x.Name).Distinct().Take(2)));
+            Console.WriteLine(String.Join(',', data.OfType<Film>().
+                SelectMany(x => x.Actors).OrderBy(x=>x.Birthdate).Select(x => x.Name).Distinct().Take(2)));
         }
         public static void AmountOfArticleOfEachAuthor(List<object> data)
         {
-            Console.WriteLine(String.Join(',', data.Where(x => x is Article).
-                Select(x => (Article)x).GroupBy(x => x.Author).Select(x=>$"{ x.Key} - {x.Count()}")));
+            Console.WriteLine(String.Join(',', data.OfType<Article>().GroupBy(x => x.Author).Select(x=>$"{ x.Key} - {x.Count()}")));
         }
         public static void AmountOfArtObjectOfEachAuthor(List<object> data)
         {
-            Console.WriteLine(String.Join(',', data.Where(x => x is ArtObject).
-                Select(x => (ArtObject)x).GroupBy(x => x.Author).Select(x => $"{ x.Key} - {x.Count()}")));
+            Console.WriteLine(String.Join(',', data.OfType<ArtObject>().
+                GroupBy(x => x.Author).Select(x => $"{ x.Key} - {x.Count()}")));
         }
         public static void AmountOfDifferentLettersInActorsNames(List<object> data)
         {
-            Console.WriteLine(data.Where(x => x is Film).SelectMany(x => ((Film)x).Actors).
+            Console.WriteLine(data.OfType<Film>().SelectMany(x => x.Actors).
                 Select(x => x.Name.Replace(" ","")).Distinct().SelectMany(x=>x.ToLower().ToCharArray()).Distinct().Count());
         }
         public static void OutputNamesOfArticlesSortedByAuthorsAndNumberOfPages(List<object> data)
         {
-            Console.WriteLine(String.Join(',', data.Where(x => x is Article).Select(x => (Article)x).
+            Console.WriteLine(String.Join(',', data.OfType<Article>().
                 OrderBy(x=>x.Author).ThenBy(x=>x.Pages).Select(x=>x.Name)));
         }
         public static void OutputActorAndAllFilmsWithHim(List<object> data)
         {
-            Console.WriteLine(String.Join('\n', data.Where(x => x is Film).
-                SelectMany(x => ((Film)x).Actors).Select(x => x.Name).Distinct().Select(
-                x=> x + ": " + String.Join(',', data.Where(x => x is Film).Select(x => ((Film)x)).
+            Console.WriteLine(String.Join('\n', data.OfType<Film>().
+                SelectMany(x => x.Actors).Select(x => x.Name).Distinct().Select(
+                x=> x + ": " + String.Join(',', data.OfType<Film>().
                 Where(u=>u.Actors.Any(u=>u.Name == x)).Select(u=>u.Name)))));
         }
         public static void OutputSumOfPagesAndValuesOfIntSequence(List<object> data)
         {
-            Console.WriteLine( data.Where(x => x is Article).Select(x => (Article)x)
-                .Sum(x => x.Pages) + data.Where(x => x is List<int>).SelectMany(x => (List<int>)x).Sum(x => x));
+            Console.WriteLine( data.OfType<Article>().
+                Sum(x => x.Pages) + data.OfType<List<int>>().SelectMany(x => x).Sum(x => x));
         }
         public static Dictionary<string,List<Article>> GetDictionaryOfArticlesWrittenByAuthor(List<object> data)
         {
-            return data.Where(x => x is Article).Select(x => (Article)x).
-                ToDictionary(x => x.Author, x => data.Where(x => x is Article).
-                Select(x => (Article)x).Where(u => u.Author == x.Author).ToList());
+            return data.OfType<Article>().
+                ToDictionary(x => x.Author, x => data.OfType<Article>().
+                Where(u => u.Author == x.Author).ToList());
         }
     }
 }
