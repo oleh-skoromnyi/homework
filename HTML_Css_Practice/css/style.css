@@ -1,0 +1,109 @@
+.layout_task8{
+    width: 100%;
+    table-layout: fixed;
+}
+.layout_task8 .title{
+    text-align: right;
+    color: red;
+}
+.layout_task8 h2{
+    color:green;
+}
+.layout_task8 ol{
+    color:red;
+}
+.layout_task8 strong{
+    color:red;
+    font-size: 150%;
+}
+.layout_task8 i{
+    color:blue;
+}
+.layout_task8 ul{
+    color:grey;
+    font-style: italic;
+}
+.usor{
+    background-image: url("../img/usor.jpg");
+    background-position: right;
+    background-repeat:repeat-y;
+}
+.leftMonkey{
+    position: relative;
+    float: left;
+}
+.rightMonkey{
+    position: relative;
+    float: right;
+}
+.nav-panel{  
+    list-style: none; 
+    color: white;
+    background-color: orange;
+    width: 100%;
+    height:3em;
+}
+.side-panel{  
+    list-style: none; 
+    color: white;
+    background: darkslategrey;
+}
+.outline{
+    width: 200px;
+    background: initial;
+}
+.outline li{
+    margin-top:10px;
+    padding:5px;
+    border: 1px solid black;
+}
+.inline{
+    width: 100%;
+    height:3em;
+}
+.inline li{
+    display: inline-block;
+    margin-top:1em;
+    margin-bottom:1em;
+    padding-left: 20px;
+}
+.side-panel li{  
+    background: darkslategrey;
+}
+.block{
+    border: 1px solid black;
+}
+.block h1{
+    text-align: center;
+}
+.block p{
+    text-align: justify;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.block strong{
+    color: blue;
+}
+.tllayout{
+    border: 1px solid black;
+    width: fit-content;
+    height: auto;
+    padding: 20px;
+}
+.circle{
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+.red{
+    background-color: red;
+}
+.yellow{
+    margin-top: -20px;
+    background-color: yellow;
+}
+.green{
+    margin-top: -20px;
+    background-color: green;
+}
